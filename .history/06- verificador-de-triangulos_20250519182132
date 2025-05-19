@@ -1,0 +1,47 @@
+const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+console.log('=== VERIFICADOR DE TRIÂNGULO ===\n');
+
+function verificarTriangulo() {
+  readline.question('Digite o valor do lado A: ', (a) => {
+    readline.question('Digite o valor do lado B: ', (b) => {
+      readline.question('Digite o valor do lado C: ', (c) => {
+        const ladoA = parseFloat(a);
+        const ladoB = parseFloat(b);
+        const ladoC = parseFloat(c);
+
+        if (isNaN(ladoA) || isNaN(ladoB) || isNaN(ladoC) || 
+            ladoA <= 0 || ladoB <= 0 || ladoC <= 0) {
+          console.log('\nErro: Digite valores numéricos positivos para todos os lados.');
+          readline.close();
+          return;
+        }
+
+        if (ladoA < ladoB + ladoC && 
+            ladoB < ladoA + ladoC && 
+            ladoC < ladoA + ladoB) {
+          
+          let tipo;
+          if (ladoA === ladoB && ladoB === ladoC) {
+            tipo = 'Equilátero que tem todos os lados iguais'; // Todos lados iguais
+          } else if (ladoA === ladoB || ladoA === ladoC || ladoB === ladoC) {
+            tipo = 'Isósceles ';  // Dois lados iguais
+          } else {
+            tipo = 'Escaleno';    // Todos lados diferentes
+          }
+
+          console.log(`\nOs lados formam um triângulo ${tipo}.`);
+        } else {
+          console.log('\nOs lados fornecidos NÃO formam um triângulo.');
+        }
+
+        readline.close();
+      });
+    });
+  });
+}
+
+verificarTriangulo();

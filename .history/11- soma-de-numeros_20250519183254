@@ -1,0 +1,34 @@
+const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+console.log('=== CALCULADORA DE SOMA ===');
+console.log('Digite 5 números para calcular a soma:\n');
+
+let soma = 0;
+let contador = 0;
+
+function solicitarNumero() {
+  if (contador < 5) {
+    readline.question(`Digite o ${contador + 1}º número: `, (numero) => {
+      const num = parseFloat(numero);
+      
+      if (isNaN(num)) {
+        console.log('Por favor, digite um número válido.\n');
+        solicitarNumero();
+      } else {
+        soma += num;
+        contador++;
+        solicitarNumero(); 
+      }
+    });
+  } else {
+    // Quando todos os 5 números foram coletados
+    console.log(`\nA soma dos 5 números é: ${soma}`);
+    readline.close();
+  }
+}
+
+// Inicia o processo
+solicitarNumero();

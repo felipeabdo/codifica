@@ -1,0 +1,76 @@
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+function mostrarMenu() {
+    console.log('\n=== MENU DE FERRAMENTAS ÚTEIS ===');
+    console.log('1. Conversor de Celsius para Fahrenheit');
+    console.log('2. Verificador de palíndromos');
+    console.log('3. Gerador de senha aleatória');
+    console.log('0. Sair\n');
+
+    readline.question('Digite o número da opção desejada: ', (opcao) => {
+        switch(opcao) {
+            case '1':
+                converterTemperatura();
+                break;
+            case '2':
+                verificarPalindromo();
+                break;
+            case '3':
+                gerarSenha();
+                break;
+            case '0':
+                console.log('Até logo!');
+                readline.close();
+                break;
+            default:
+                console.log('Opção inválida! Por favor, escolha uma opção de 0 a 3.');
+                mostrarMenu();
+                break;
+        }
+    });
+}
+
+// Opção 1: Conversor de temperatura
+function converterTemperatura() {
+    readline.question('Digite a temperatura em Celsius: ', (celsius) => {
+        const fahrenheit = (parseFloat(celsius) * 9/5) + 32;
+        console.log(`\n${celsius}°C equivalem a ${fahrenheit.toFixed(1)}°F`);
+        mostrarMenu();
+    });
+}
+
+// Opção 2: Verificador de palíndromos
+function verificarPalindromo() {
+    readline.question('Digite uma palavra ou frase: ', (texto) => {
+        const textoProcessado = texto.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const reverso = textoProcessado.split('').reverse().join('');
+        
+        if (textoProcessado === reverso) {
+            console.log(`\n"${texto}" é um palíndromo!`);
+        } else {
+            console.log(`\n"${texto}" não é um palíndromo.`);
+        }
+        mostrarMenu();
+    });
+}
+
+// Opção 3: Gerador de senha aleatória
+function gerarSenha() {
+    readline.question('Digite o comprimento da senha (8-16 caracteres): ', (tamanho) => {
+        const comprimento = Math.min(16, Math.max(8, parseInt(tamanho) || 12));
+        const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+        let senha = '';
+        
+        for (let i = 0; i < comprimento; i++) {
+            senha += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+        }
+        
+        console.log(`\nSua nova senha: ${senha}`);
+        mostrarMenu();
+    });
+}
+
+mostrarMenu();
